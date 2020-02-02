@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="74e7f3fe-0d4c-45eb-9835-bc3efee73a2d" name="Default Changelist" comment="" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CoverageViewManager">
+    <option name="myElementSize" value="186" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1WGEgDYPaYfp2Ozd5aR76h94srP" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/FilePackage" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\github\untitled1\src\studygis\common\file" />
+      <recent name="C:\Users\YAO\IdeaProjects\untitled1\src" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="studygis.common.file.Main" />
+      <module name="FilePackage" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="studygis.common.file.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="com.company.Main" />
+      <module name="FilePackage" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="74e7f3fe-0d4c-45eb-9835-bc3efee73a2d" name="Default Changelist" comment="" />
+      <created>1578767639898</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1578767639898</updated>
+      <workItem from="1578767643936" duration="4387000" />
+      <workItem from="1578824910400" duration="14347000" />
+      <workItem from="1579098695049" duration="10052000" />
+      <workItem from="1579457906769" duration="1170000" />
+      <workItem from="1580536809524" duration="5397000" />
+      <workItem from="1580631235543" duration="8352000" />
+      <workItem from="1580648277585" duration="1766000" />
+      <workItem from="1580650742805" duration="13000" />
+      <workItem from="1580650892125" duration="122000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="482" y="156" key="#com.intellij.ide.util.MemberChooser" timestamp="1579106696183">
+      <screen x="0" y="0" width="1368" height="872" />
+    </state>
+    <state x="482" y="156" key="#com.intellij.ide.util.MemberChooser/0.0.1368.872@0.0.1368.872" timestamp="1579106696183" />
+    <state x="440" y="145" key="#xdebugger.evaluate" timestamp="1578842451786">
+      <screen x="0" y="0" width="1368" height="872" />
+    </state>
+    <state x="440" y="145" key="#xdebugger.evaluate/0.0.1368.872@0.0.1368.872" timestamp="1578842451786" />
+    <state width="813" height="466" key="DebuggerActiveHint" timestamp="1579106225357">
+      <screen x="0" y="0" width="1368" height="872" />
+    </state>
+    <state width="813" height="466" key="DebuggerActiveHint/0.0.1368.872@0.0.1368.872" timestamp="1579106225357" />
+    <state width="1326" height="281" key="GridCell.Tab.0.bottom" timestamp="1579114478793">
+      <screen x="0" y="0" width="1368" height="872" />
+    </state>
+    <state width="1326" height="281" key="GridCell.Tab.0.bottom/0.0.1368.872@0.0.1368.872" timestamp="1579114478793" />
+    <state width="1326" height="281" key="GridCell.Tab.0.center" timestamp="1579114478793">
+      <screen x="0" y="0" width="1368" height="872" />
+    </state>
+    <state width="1326" height="281" key="GridCell.Tab.0.center/0.0.1368.872@0.0.1368.872" timestamp="1579114478793" />
+    <state width="1326" height="281" key="GridCell.Tab.0.left" timestamp="1579114478792">
+      <screen x="0" y="0" width="1368" height="872" />
+    </state>
+    <state width="1326" height="281" key="GridCell.Tab.0.left/0.0.1368.872@0.0.1368.872" timestamp="1579114478792" />
+    <state width="1326" height="281" key="GridCell.Tab.0.right" timestamp="1579114478793">
+      <screen x="0" y="0" width="1368" height="872" />
+    </state>
+    <state width="1326" height="281" key="GridCell.Tab.0.right/0.0.1368.872@0.0.1368.872" timestamp="1579114478793" />
+    <state width="1326" height="281" key="GridCell.Tab.1.bottom" timestamp="1579114478793">
+      <screen x="0" y="0" width="1368" height="872" />
+    </state>
+    <state width="1326" height="281" key="GridCell.Tab.1.bottom/0.0.1368.872@0.0.1368.872" timestamp="1579114478793" />
+    <state width="1326" height="281" key="GridCell.Tab.1.center" timestamp="1579114478793">
+      <screen x="0" y="0" width="1368" height="872" />
+    </state>
+    <state width="1326" height="281" key="GridCell.Tab.1.center/0.0.1368.872@0.0.1368.872" timestamp="1579114478793" />
+    <state width="1326" height="281" key="GridCell.Tab.1.left" timestamp="1579114478793">
+      <screen x="0" y="0" width="1368" height="872" />
+    </state>
+    <state width="1326" height="281" key="GridCell.Tab.1.left/0.0.1368.872@0.0.1368.872" timestamp="1579114478793" />
+    <state width="1326" height="281" key="GridCell.Tab.1.right" timestamp="1579114478793">
+      <screen x="0" y="0" width="1368" height="872" />
+    </state>
+    <state width="1326" height="281" key="GridCell.Tab.1.right/0.0.1368.872@0.0.1368.872" timestamp="1579114478793" />
+    <state x="188" y="82" key="SettingsEditor" timestamp="1578831968856">
+      <screen x="0" y="0" width="1368" height="872" />
+    </state>
+    <state x="188" y="82" key="SettingsEditor/0.0.1368.872@0.0.1368.872" timestamp="1578831968856" />
+    <state x="380" y="265" key="com.intellij.ide.util.TipDialog" timestamp="1580534056238">
+      <screen x="0" y="0" width="1368" height="872" />
+    </state>
+    <state x="380" y="265" key="com.intellij.ide.util.TipDialog/0.0.1368.872@0.0.1368.872" timestamp="1580534056238" />
+    <state x="415" y="200" width="536" height="486" key="extract.method.dialog" timestamp="1578771049661">
+      <screen x="0" y="0" width="1368" height="872" />
+    </state>
+    <state x="415" y="200" width="536" height="486" key="extract.method.dialog/0.0.1368.872@0.0.1368.872" timestamp="1578771049660" />
+    <state x="348" y="185" width="672" height="678" key="search.everywhere.popup" timestamp="1579106314144">
+      <screen x="0" y="0" width="1368" height="872" />
+    </state>
+    <state x="348" y="185" width="672" height="678" key="search.everywhere.popup/0.0.1368.872@0.0.1368.872" timestamp="1579106314144" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/company/FilePackage.java</url>
+          <line>109</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/company/FilePackage.java</url>
+          <line>103</line>
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="HeadEnd" language="JAVA" />
+        <watch expression="headBytes" language="JAVA" />
+        <watch expression="bytes[i]" language="JAVA" />
+        <watch expression="fixheadBytes[headBytes.size()]" language="JAVA" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/untitled1$Main.ic" NAME="Main Coverage Results" MODIFIED="1578825162137" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+  </component>
+</project>
