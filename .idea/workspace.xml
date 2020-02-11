@@ -14,7 +14,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
+        <option value="Enum" />
       </list>
     </option>
   </component>
@@ -35,7 +37,8 @@
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="fileTemplates" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -61,7 +64,7 @@
       <module name="FilePackage" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="studygis.common.file.*" />
+          <option name="PATTERN" value="studygis.common.timer.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -104,7 +107,11 @@
       <workItem from="1580631235543" duration="8352000" />
       <workItem from="1580648277585" duration="1766000" />
       <workItem from="1580650742805" duration="13000" />
-      <workItem from="1580650892125" duration="122000" />
+      <workItem from="1580650892125" duration="401000" />
+      <workItem from="1580984639021" duration="3883000" />
+      <workItem from="1581126016772" duration="14081000" />
+      <workItem from="1581410908877" duration="1043000" />
+      <workItem from="1581425542056" duration="2727000" />
     </task>
     <servers />
   </component>
@@ -199,14 +206,22 @@
           <line>103</line>
           <option name="timeStamp" value="16" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/studygis/common/timer/TimerUtil.java</url>
+          <line>22</line>
+          <option name="timeStamp" value="17" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/studygis/common/file/FilePackage.java</url>
+          <line>85</line>
+          <option name="timeStamp" value="19" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
-        <watch expression="HeadEnd" language="JAVA" />
-        <watch expression="headBytes" language="JAVA" />
         <watch expression="bytes[i]" language="JAVA" />
-        <watch expression="fixheadBytes[headBytes.size()]" language="JAVA" />
+        <watch expression="Thread.currentThread().getStackTrace()" />
       </configuration>
     </watches-manager>
   </component>

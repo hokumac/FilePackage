@@ -1,8 +1,17 @@
 package studygis.common.file;
 
+import studygis.common.encrypt.IFileEncrypt;
+import studygis.common.event.IFileEventListener;
+import studygis.common.event.fileEventMsgObj;
+import studygis.common.event.fileEventObject;
+import studygis.common.event.fileEventProcessObj;
+
+import javax.swing.*;
 import java.io.*;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Vector;
 
 /**
  * @author study_gis@126.com
@@ -18,8 +27,24 @@ public class FileInfo implements Serializable {
     private long startposition;
     private long endposition;
     private transient String LocalPath;
-    private transient int writebuffer = 2048;
+    private transient int writebuffer = 1024*2014*5;
+    private IFileEncrypt fileEncrypt;
 
+    private Vector eventlist=new Vector();
+
+    public void setFileEncrypt(IFileEncrypt encrypt) {
+        fileEncrypt = encrypt;
+    }
+
+    private  void setExtendMethod(FileInfo fileInfo)
+    {
+        Iterator it=eventlist.iterator();
+        while(it.hasNext())
+        {
+            fileInfo.addMyEventListener((IFileEventListener) it.next());
+        }
+
+    }
 
     public String getLocalPath() {
         return LocalPath;
@@ -84,6 +109,8 @@ public class FileInfo implements Serializable {
             //处理文件夹
             if (subFiles != null) {
                 for (int i = 0; i < subFiles.size(); i++) {
+                    subFiles.get(i).setFileEncrypt(fileEncrypt);
+                    setExtendMethod(subFiles.get(i));
                     if (!subFiles.get(i).PackageFile(tagPath))
                         return false;
                 }
@@ -98,23 +125,36 @@ public class FileInfo implements Serializable {
 
     //文件打包的具体执行，以流的方式将文件输入到同一个指定文件中
     private boolean appendFile(String tagPath) throws IOException {
-        if(startposition==endposition)
+        if (startposition == endposition)
             return true;
         // 定义源文件
         File file = new File(LocalPath);
+        onMsgFire("----------开始打包文件:"+this.name);
         InputStream fis = new FileInputStream(file);
 
-        OutputStream fos = new FileOutputStream(tagPath,true);
+        OutputStream fos = new FileOutputStream(tagPath, true);
 
         // 定义字节数组，接收读取到的源文件字节内容
         byte[] bytes = new byte[writebuffer];
 
         //需要改进写入效率
-        int readBytecount=-1;
-        while ((readBytecount=fis.read(bytes)) != -1) {
-            fos.write(bytes,0,readBytecount);
-        }
+        int readBytecount = -1;
+        long currentLength=0;
+        while ((readBytecount = fis.read(bytes)) != -1) {
+            if (fileEncrypt != null) {
+                byte [] enBytes=fileEncrypt.EncryptBytes(bytes, readBytecount);
+                fos.write(enBytes, 0, enBytes.length);
 
+                currentLength+=enBytes.length;
+                onProcessFire(file.length(),currentLength);
+            } else {
+                fos.write(bytes, 0, readBytecount);
+
+                currentLength+=readBytecount;
+                onProcessFire(file.length(),currentLength);
+            }
+        }
+        onMsgFire("----------文件:"+this.name+"打包完成！");
         fos.flush();
         fis.close();
         fos.close();
@@ -122,32 +162,37 @@ public class FileInfo implements Serializable {
     }
 
     //解压数据包，从指定文件中读取数据
-    public  boolean UnPackageFile(String packageFile,String tagFolder,long offset) throws IOException {
-        String pathName=tagFolder+"\\"+this.name;
+    public boolean UnPackageFile(String packageFile, String tagFolder, long offset) throws IOException {
+        String pathName = tagFolder + "\\" + this.name;
         if (type == 1) {
             File dic = new File(pathName);
-            if(!dic.exists())
+            if (!dic.exists())
                 dic.mkdirs();
             //处理文件夹
             if (subFiles != null) {
                 for (int i = 0; i < subFiles.size(); i++) {
-                    if (!subFiles.get(i).UnPackageFile(packageFile,pathName,offset))
+                    subFiles.get(i).setFileEncrypt(fileEncrypt);
+                    setExtendMethod(subFiles.get(i));
+                    if (!subFiles.get(i).UnPackageFile(packageFile, pathName, offset))
                         return false;
                 }
             }
         } else {
             //处理文件
-            File tagFile=new File(pathName);
+            onMsgFire("----------开始解压文件:"+this.name);
+            File tagFile = new File(pathName);
             tagFile.createNewFile();
 
-            File sourceFile=new File(packageFile);
-            copyFileUsingFileStreams(sourceFile,tagFile,offset+startposition,endposition-startposition);
+            File sourceFile = new File(packageFile);
+            copyFileUsingFileStreams(sourceFile, tagFile, offset + startposition,
+                    endposition - startposition);
+            onMsgFire("----------文件:"+this.name+"解压完成！");
         }
         return true;
     }
 
     //解压的具体实现，从文件流中还原文件
-    private  void copyFileUsingFileStreams(File source, File dest,long offset,long length)
+    private void copyFileUsingFileStreams(File source, File dest, long offset, long length)
             throws IOException {
         InputStream input = null;
         OutputStream output = null;
@@ -155,17 +200,31 @@ public class FileInfo implements Serializable {
             input = new FileInputStream(source);
             output = new FileOutputStream(dest);
             byte[] buf = new byte[1024];
-            int bytesRead=-1;
+            int bytesRead = -1;
 
             ///存在效率问题，待优化
             //大文件存在内存溢出问题
             long lset = input.skip(offset);
-            while ((bytesRead = input.read(buf)) > 0&&length>0) {
-                if(length<bytesRead) {
-                    bytesRead= (int) length;
+            long currentLength=0;
+            long max=length;
+            while ((bytesRead = input.read(buf)) > 0 && length > 0) {
+                if (length < bytesRead) {
+                    bytesRead = (int) length;
                 }
-                output.write(buf, 0, bytesRead);
-                length=length-bytesRead;
+
+                if (fileEncrypt != null) {
+                    byte [] enBytes =fileEncrypt.DecryptBytes(buf, bytesRead);
+                    output.write(enBytes, 0, enBytes.length);
+
+                    currentLength+=enBytes.length;
+                    onProcessFire(max,currentLength);
+                } else {
+                    output.write(buf, 0, bytesRead);
+
+                    currentLength+=bytesRead;
+                    onProcessFire(max,currentLength);
+                }
+                length = length - bytesRead;
             }
         } finally {
             input.close();
@@ -174,7 +233,7 @@ public class FileInfo implements Serializable {
     }
 
     //文件还原实现，利用FileChannel进行效率尝试
-    private  void copyFileUsingFileChannels(File source, File dest,long offset,long length) throws IOException {
+    private void copyFileUsingFileChannels(File source, File dest, long offset, long length) throws IOException {
         FileChannel inputChannel = null;
         FileChannel outputChannel = null;
         try {
@@ -188,13 +247,12 @@ public class FileInfo implements Serializable {
     }
 
     //文件还原实现
-    private boolean CreateFile(String packageFile,String tagPath,long offset) throws IOException {
-         if(startposition==endposition)
-         {
-             File file = new File(tagPath+"\\"+name);
-             file.createNewFile();
-             return  true;
-         }
+    private boolean CreateFile(String packageFile, String tagPath, long offset) throws IOException {
+        if (startposition == endposition) {
+            File file = new File(tagPath + "\\" + name);
+            file.createNewFile();
+            return true;
+        }
         // 定义源文件
         File file = new File(packageFile);
         InputStream fis = new FileInputStream(file);
@@ -202,11 +260,10 @@ public class FileInfo implements Serializable {
         OutputStream fos = new FileOutputStream(tagPath);
 
         // 定义字节数组，接收读取到的源文件字节内容
-        int nCount = (int) ((endposition-startposition)/writebuffer);
+        int nCount = (int) ((endposition - startposition) / writebuffer);
 
-        if(nCount==0)
-        {
-            int nLength =(int)(endposition-startposition);
+        if (nCount == 0) {
+            int nLength = (int) (endposition - startposition);
             byte[] bytes = new byte[nLength];
             while (fis.read(bytes) != -1) {
                 fos.write(bytes);
@@ -214,7 +271,7 @@ public class FileInfo implements Serializable {
         } else {
 
             byte[] bytes = new byte[writebuffer];
-            while (nCount>0) {
+            while (nCount > 0) {
                 fos.write(bytes);
                 nCount--;
             }
@@ -224,5 +281,42 @@ public class FileInfo implements Serializable {
         fis.close();
         fos.close();
         return true;
+    }
+
+    /*
+     *@功能描述  发起消息事件
+     * @参数 msg
+     * @返回值 void
+     */
+    private  void onMsgFire(String msg)
+    {
+        fileEventMsgObj eventMsgObj=new fileEventMsgObj(this,msg);
+        notifyMyEvent(eventMsgObj);
+    }
+
+    private void  onProcessFire(long max,long current){
+        fileEventProcessObj eventMsgObj=new fileEventProcessObj(this,current,max);
+        notifyMyEvent(eventMsgObj);
+    }
+
+    public void addMyEventListener(IFileEventListener me)
+    {
+        if(!eventlist.contains(me))
+        eventlist.add(me);
+    }
+
+    public void deleteMyEventListener(IFileEventListener me)
+    {
+        eventlist.remove(me);
+    }
+
+    public void notifyMyEvent(fileEventObject me)
+    {
+        Iterator it=eventlist.iterator();
+        while(it.hasNext())
+        {
+            //在类中实例化自定义的监听器对象,并调用监听器方法
+            ((IFileEventListener) it.next()).handleEvent(me);
+        }
     }
 }

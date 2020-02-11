@@ -1,7 +1,17 @@
 package studygis.common.file;
 
+import studygis.common.encrypt.EncryptFactory;
+import studygis.common.encrypt.EncryptMethod;
+import studygis.common.encrypt.IFileEncrypt;
+import studygis.common.event.IFileEventListener;
+import studygis.common.event.fileEventMsgObj;
+import studygis.common.event.fileEventObject;
+import studygis.common.event.fileEventProcessObj;
+
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Vector;
 
 /**
  * @author study_gis@126.com
@@ -15,6 +25,21 @@ public class FilePackage {
     private String ChartsetName = "ISO-8859-1";
     private String FileChartsetName = "UTF-8";
     private int readBufferLength=2048;
+
+
+    private EncryptMethod encryptMethod=EncryptMethod.None;
+    private String encryptPassWord;
+    private EncryptFactory encryptFactory;
+
+
+    private Vector eventlist=new Vector();
+
+    public FilePackage(String chartsetName, EncryptMethod method,String pwd) {
+        ChartsetName = chartsetName;
+        encryptMethod=method;
+        encryptPassWord=pwd;
+        encryptFactory=new EncryptFactory();
+    }
 
     public FilePackage(String chartsetName) {
         ChartsetName = chartsetName;
@@ -58,6 +83,7 @@ public class FilePackage {
     }
 
     public boolean Package(String path, String tagPath) throws IOException {
+        onMsgFire("----------"+tagPath+"开始打包...");
         FileInfo fileInfo = getAllFileName(path);
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -68,14 +94,40 @@ public class FilePackage {
         byte[] bytes = byteArrayOutputStream.toByteArray();
         objectOutputStream.close();
         byteArrayOutputStream.close();
-
+        onProcessFire(10,5);
         //写入文件对象信息
         if (writeFileinfo(tagPath, bytes)) {
+
+            setExtendMethod(fileInfo);
             //打包文件
-            if (fileInfo.PackageFile(tagPath))
+            if (fileInfo.PackageFile(tagPath)) {
+                onMsgFire("----------"+tagPath+"打包成功！");
                 return true;
+            }
         }
+        onMsgFire("----------"+tagPath+"打包失败！");
         return false;
+    }
+
+    /*
+     *@功能描述  为文件对象设置加密管理对象
+      * @参数 fileInfo
+     * @返回值 void
+    */
+    private  void setExtendMethod(FileInfo fileInfo)
+    {
+        if(encryptMethod!=EncryptMethod.None)
+        {
+            IFileEncrypt fileEncrypt= encryptFactory.getFileEncrypt(encryptMethod,encryptPassWord);
+            fileInfo.setFileEncrypt(fileEncrypt);
+        }
+
+        Iterator it=eventlist.iterator();
+        while(it.hasNext())
+        {
+            fileInfo.addMyEventListener((IFileEventListener) it.next());
+        }
+
     }
 
     private boolean writeFileinfo(String tagPath, byte[] fileInfos) {
@@ -140,6 +192,7 @@ public class FilePackage {
                               {
                                   findHeadEnd=true;
                                   list.add(bytes[i]);
+                                  headBytes.clear();
                                   break;
                               }
                           }
@@ -152,7 +205,13 @@ public class FilePackage {
 
                 list.add(bytes[i]);
             }
-            readByte = fos.read(bytes);
+            if(!findHeadEnd) {
+                readByte = fos.read(bytes);
+            }
+            else
+            {
+                break;
+            }
         }
         if(!findHeadEnd)
             return  null;
@@ -168,11 +227,51 @@ public class FilePackage {
     }
 
     public boolean UnPackage(String filepath, String tagPath) throws IOException, ClassNotFoundException {
+        onMsgFire("----------开始解压数据："+filepath);
         FileInfo pFileInfo = getFileInfo(filepath);
         if(pFileInfo!=null)
         {
+            setExtendMethod(pFileInfo);
            return pFileInfo.UnPackageFile(filepath,tagPath,pFileInfo.getStartposition());
         }
+        onMsgFire("----------解压完成！");
         return false;
+    }
+
+    /*
+     *@功能描述  发起消息事件
+      * @参数 msg
+     * @返回值 void
+    */
+    private  void onMsgFire(String msg)
+    {
+        fileEventMsgObj eventMsgObj=new fileEventMsgObj(this,msg);
+        notifyMyEvent(eventMsgObj);
+    }
+
+    private void  onProcessFire(long max,long current){
+        fileEventProcessObj eventMsgObj=new fileEventProcessObj(this,current,max);
+        notifyMyEvent(eventMsgObj);
+    }
+
+    public void addMyEventListener(IFileEventListener me)
+    {
+        if(!eventlist.contains(me))
+        eventlist.add(me);
+    }
+
+    public void deleteMyEventListener(IFileEventListener me)
+    {
+        eventlist.remove(me);
+    }
+
+    public void notifyMyEvent(fileEventObject me)
+    {
+        Iterator it=eventlist.iterator();
+        while(it.hasNext())
+        {
+            //在类中实例化自定义的监听器对象,并调用监听器方法
+            ((IFileEventListener) it.next()).handleEvent(me);
+        }
     }
 }
